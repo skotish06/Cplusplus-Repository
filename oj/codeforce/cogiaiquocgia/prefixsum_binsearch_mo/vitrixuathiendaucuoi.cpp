@@ -14,10 +14,26 @@
 
 using namespace std;
 const int N = 1e6 + 9;
-
+int n, x, q;
+int a[N];
 
 void logic() {
-
+    cin >> n;
+    REP(i, n) {
+        cin >> a[i];
+    }
+    cin >> q;
+    while (q--) {
+        cin >> x;
+        int l = lower_bound(a + 1, a + n + 1, x) - a;
+        int r = upper_bound(a + 1, a + n + 1, x) - a - 1;
+        if (binary_search(a + 1, a + n + 1, x)) {
+            cout << l << ' ' << r << '\n';
+        }
+        else {
+            cout << "-1 -1" << '\n';
+        }
+    }
 }
 
 int32_t main() {
