@@ -10,40 +10,33 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "TEAM"
 
 using namespace std;
 const int N = 1e6 + 9;
-int a[N], x;
-bool f[N];
 int n, k, ans;
+int a[N], cnt[N];
 
-void sieve() {
-    memset(f, true, sizeof(f));
-    f[0] = f[1] = false;
-    for (int i = 2; i * i < N; i++) {
-        if (f[i]) {
-            for (int j = i * i; j < N; j += i) {
-                f[j] = false;
-            }
-        }
-    }
+int c(int x) {
+    return (x * (x - 1)) / 2;
 }
 
 void logic() {
-    sieve();
-    for (int i = 2; i <= (1e5 + 5); ++i) {
-        if (f[i]) {
-            a[++k] = i;
+    cin >> n >> k;
+    REP(i, n) {
+        cin >> a[i];
+        if (a[i] >= k) {
+            ++cnt[a[i]];
         }
     }
-    cin >> n;
-    while (n--) {
-        cin >> x;
-        int lower_primeNum = lower_bound(a + 1, a + k + 1, x) - a - 1;
-        int upper_primeNum = lower_bound(a + 1, a + k + 1, x) - a;
-        cout << abs(a[lower_primeNum]) << ' ' << abs(a[upper_primeNum]) << '\n';
+
+    for (int i = 0; i < N; i++) {
+        if (cnt[i] >= 2) {
+            ans += c(cnt[i]);
+        }
     }
+    
+    cout << ans;
 }
 
 int32_t main() {
