@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define int long long
-#define MOD 1000000007
+#define MOD 123456789
 #define INF 1e18
 #define MAXN 100005
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
@@ -10,43 +10,41 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "DIVISOR"
 
 using namespace std;
-const int N = 1e6 + 9;
-int n, q, k, a[N], ans;
-pair<int, int> c[N];
+const int N = 3e6 + 9;
+int n, a[N], k;
+unordered_map<int, int> cnt;
+unordered_set<int> s;
+int ans = 1;
 
-void sub1() {
-    for (int i = 1; i <= n; ++i) {
-        if (i & 1) {
-            c[++k].fi = a[i];
-        }
-        else {
-            c[k].se = abs(q - c[k].fi);
-        } 
-    }
-    cout << '\n';
-    for (int i = 1; i <= k; ++i) {
-        cout << c[i].fi << " " << c[i].se << "\n";
-    }
-    for (int i = 1; i <= k; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (j & 1) {
-                ans += abs(c[i].fi - a[j]);
-            }
-            else {
-                ans += abs(c[i].se - a[j]);
-            }
-        } 
+void pt(int x) {
+    int i = 2;
+    while (x > 1) {
+        if (x % i == 0) {
+            a[++k] = i;
+            x /= i;
+        } else i++;
     }
 }
+
 void logic() {
-    cin >> n >> q;
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        int x; cin >> x;
+        pt(x);
     }
-    sub1();
+    for (int i = 1; i <= k; ++i) {
+        s.insert(a[i]);
+    }
+    for (int i = 1; i <= k; ++i) {
+        ++cnt[a[i]];
+    }
+    for (auto x : s) {
+        ans = (ans * (cnt[x] + 1) % MOD) % MOD;
+    }
+    cout << ans;
 }
 
 int32_t main() {

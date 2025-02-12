@@ -10,36 +10,42 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "MXS"
+#define task "RACE"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, a[N], lmax[N], rmax[N];
-int res = LLONG_MIN;
+int n;
+int a[N];
+int min_dis = LLONG_MAX;
+
+void sub1() {
+    min_dis = LLONG_MAX;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i + 1; j <= n; ++j) {
+            min_dis = min(min_dis, abs(a[j] - a[i]));
+        }
+    }
+    cout << min_dis;
+}
+
+void sub2() {
+    min_dis = LLONG_MAX;
+    sort (a + 1, a + n + 1);
+    for (int i = 2; i <= n; ++i) {
+        min_dis = min(min_dis, abs(a[i] - a[i - 1]));
+    }
+    cout << min_dis;
+}
 
 void logic() {
     cin >> n;
-	if (n < 2) {
-		cout << 0;
-	}
-	else {
-		FOR(i, 1, n) {
-			cin >> a[i];
-		}
-		lmax[1] = a[1];
-		int sum = a[1];
-		FOR(i, 2, n) {
-			sum = max(a[i], sum + a[i]);
-			lmax[i] = max(lmax[i - 1], sum);
-		}
-		rmax[n] = a[n], sum = a[n];
-		for (int i = n - 1; i >= 1; i--) {
-			sum = max(a[i], sum + a[i]);
-			rmax[i] = max(rmax[i + 1], sum);
-		}
-		FOR(i, 1, n - 1) res = max(res, lmax[i] + rmax[i + 1]);
-		cout << res << '\n';
-	}
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    if (n <= 10e3) {
+        sub1();
+    }
+    else sub2();
 }
 
 int32_t main() {

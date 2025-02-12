@@ -10,36 +10,36 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "MXS"
+#define task "SDB"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, a[N], lmax[N], rmax[N];
-int res = LLONG_MIN;
+int n, a[N], t = 1, f[N];
+int q;
+
+void sieve(){
+    fill (f + 1, f + N + 1, 2);
+	for (int i = 2; i <= sqrt(N); i++){
+		f[i * i]--;
+		for (int j = i; i * j <= N; j++){
+			f[i * j] += 2;
+		}
+	}
+
+}
 
 void logic() {
-    cin >> n;
-	if (n < 2) {
-		cout << 0;
+    sieve();
+	for (int i = 1; i <= N; i++){
+        if (i % 3 == 0 and f[i] == 9)
+            a[i] = a[i - 1] + 1;
+        else a[i] = a[i - 1];
 	}
-	else {
-		FOR(i, 1, n) {
-			cin >> a[i];
-		}
-		lmax[1] = a[1];
-		int sum = a[1];
-		FOR(i, 2, n) {
-			sum = max(a[i], sum + a[i]);
-			lmax[i] = max(lmax[i - 1], sum);
-		}
-		rmax[n] = a[n], sum = a[n];
-		for (int i = n - 1; i >= 1; i--) {
-			sum = max(a[i], sum + a[i]);
-			rmax[i] = max(rmax[i + 1], sum);
-		}
-		FOR(i, 1, n - 1) res = max(res, lmax[i] + rmax[i + 1]);
-		cout << res << '\n';
-	}
+    cin >> q;
+    while(q--){
+        int l, r; cin >> l >> r;
+        cout << a[r] - a[l - 1] << '\n';
+    }
 }
 
 int32_t main() {

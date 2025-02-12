@@ -10,36 +10,36 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "MXS"
+#define task ""
 
 using namespace std;
+
 const int N = 1e6 + 9;
-int n, a[N], lmax[N], rmax[N];
-int res = LLONG_MIN;
+int n, t[N];
+
+void tsnt(int n) {
+    memset(t, 0, sizeof(t));
+    while (n % 2 == 0) {
+        ++t[2];
+        n /= 2;
+    }
+    for (int i = 3; i * i <= n; i += 2) {
+        while (n % i == 0) {
+            ++t[i];
+            n /= i;
+        }
+    }
+    if (n > 1) t[n]++;
+}
 
 void logic() {
     cin >> n;
-	if (n < 2) {
-		cout << 0;
-	}
-	else {
-		FOR(i, 1, n) {
-			cin >> a[i];
-		}
-		lmax[1] = a[1];
-		int sum = a[1];
-		FOR(i, 2, n) {
-			sum = max(a[i], sum + a[i]);
-			lmax[i] = max(lmax[i - 1], sum);
-		}
-		rmax[n] = a[n], sum = a[n];
-		for (int i = n - 1; i >= 1; i--) {
-			sum = max(a[i], sum + a[i]);
-			rmax[i] = max(rmax[i + 1], sum);
-		}
-		FOR(i, 1, n - 1) res = max(res, lmax[i] + rmax[i + 1]);
-		cout << res << '\n';
-	}
+    tsnt(n);
+
+    for (int i = 2; i <= n; ++i) {
+        if (t[i] > 0) cout << i << "^" << t[i] << " ";
+    }
+    cout << '\n';
 }
 
 int32_t main() {

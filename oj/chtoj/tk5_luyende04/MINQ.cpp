@@ -10,36 +10,27 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "MXS"
+#define task "MINQ"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, a[N], lmax[N], rmax[N];
-int res = LLONG_MIN;
+int n, q, l, r, k;
+int a[N];
 
 void logic() {
-    cin >> n;
-	if (n < 2) {
-		cout << 0;
-	}
-	else {
-		FOR(i, 1, n) {
-			cin >> a[i];
-		}
-		lmax[1] = a[1];
-		int sum = a[1];
-		FOR(i, 2, n) {
-			sum = max(a[i], sum + a[i]);
-			lmax[i] = max(lmax[i - 1], sum);
-		}
-		rmax[n] = a[n], sum = a[n];
-		for (int i = n - 1; i >= 1; i--) {
-			sum = max(a[i], sum + a[i]);
-			rmax[i] = max(rmax[i + 1], sum);
-		}
-		FOR(i, 1, n - 1) res = max(res, lmax[i] + rmax[i + 1]);
-		cout << res << '\n';
-	}
+    cin >> n >> q;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    while (q--) {
+        cin >> l >> r >> k;
+        int res = lower_bound(a + l, a + r + 1, k) - a;
+        if (res >= r + 1) {
+            cout << -1 << '\n'; 
+            return;
+        }
+        cout << a[res] << '\n';
+    }
 }
 
 int32_t main() {

@@ -10,43 +10,49 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "SUMMAX"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, q, k, a[N], ans;
-pair<int, int> c[N];
+int n, k;
+int a[N];
+int pre[N];
+int sum_max = LLONG_MIN;
+int maxx[N];
+int cmax = LLONG_MIN;
 
 void sub1() {
     for (int i = 1; i <= n; ++i) {
-        if (i & 1) {
-            c[++k].fi = a[i];
+        int l = i, r = i + k - 1;
+        while (l <= r) {
+            sum_max = max(sum_max, pre[r] - pre[l - 1]);
+            r--;
         }
-        else {
-            c[k].se = abs(q - c[k].fi);
-        } 
     }
-    cout << '\n';
-    for (int i = 1; i <= k; ++i) {
-        cout << c[i].fi << " " << c[i].se << "\n";
-    }
-    for (int i = 1; i <= k; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (j & 1) {
-                ans += abs(c[i].fi - a[j]);
-            }
-            else {
-                ans += abs(c[i].se - a[j]);
-            }
-        } 
-    }
+    cout << sum_max;
 }
+
+void sub2() {
+    for (int i = 1; i <= n; ++i) {
+        maxx[i] = pre[i] - pre[max(0LL, i - k)];
+        if (i > 1) {
+            maxx[i] = max(maxx[i], maxx[i - 1] + a[i]);
+        }
+        cmax = max(cmax, maxx[i]);
+    }
+
+    cout << cmax << '\n';
+}
+
 void logic() {
-    cin >> n >> q;
+    cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
     }
-    sub1();
+    if (n <= 1e3) sub1();
+    else sub2();
+
 }
 
 int32_t main() {
