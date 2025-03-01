@@ -10,43 +10,37 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "NECK"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, q, k, a[N], ans;
-pair<int, int> c[N];
+int n;
+int a[N];
+deque<int> dq;
+map<int, int> mp;
 
-void sub1() {
-    for (int i = 1; i <= n; ++i) {
-        if (i & 1) {
-            c[++k].fi = a[i];
-        }
-        else {
-            c[k].se = abs(q - c[k].fi);
-        } 
-    }
-    cout << '\n';
-    for (int i = 1; i <= k; ++i) {
-        cout << c[i].fi << " " << c[i].se << "\n";
-    }
-    for (int i = 1; i <= k; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (j & 1) {
-                ans += abs(c[i].fi - a[j]);
-            }
-            else {
-                ans += abs(c[i].se - a[j]);
-            }
-        } 
-    }
-}
 void logic() {
-    cin >> n >> q;
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        ++mp[a[i]];
     }
-    sub1();
+    dq.push_back(a[1]);
+    for (int i = 2; i <= n; ++i) {
+        if (a[i] > dq.back()) {
+            dq.push_back(a[i]);
+        }
+        else if (a[i] < dq.front()) {
+            dq.push_front(a[i]);
+        }
+        else if (a[i] < dq.back() and a[i] > dq.front()) {
+            continue;
+        }
+        else if (mp[a[i]] > 1) {
+            continue;
+        }
+    }
+    cout << dq.size();
 }
 
 int32_t main() {

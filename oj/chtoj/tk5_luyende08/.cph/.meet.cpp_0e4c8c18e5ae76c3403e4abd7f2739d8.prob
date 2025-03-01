@@ -1,0 +1,1 @@
+{"name":"Local: meet","url":"/Users/shouko/Documents/workspace/learningpath/oj/chtoj/tk5_luyende08/meet.cpp","tests":[{"id":1740234026875,"input":"5 2\n1 2 3 4 5\n1 5\n2 3","output":"2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspace/learningpath/oj/chtoj/tk5_luyende08/meet.cpp","group":"local","local":true}

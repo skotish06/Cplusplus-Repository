@@ -1,45 +1,42 @@
-#include< b i t s / s tdc ++.h>
-using namespace std ;
-const int _ s i z e = 1e6 + 5;
-int n , a [ _ s i z e ] , p [ _ s i z e ] , i , j , q ,ma=0 ,mi=1e18 ;
-int bns ( int x ) {
-int ans = n + 1;
-int l =1;
-int r=n ;
-while ( l <=r ) {
-int mid = ( l +r ) / 2 ;
-i f ( p [mid ] <= x ) {
-ans=mid ;
-r=mid
-−1;
+#include <bits/stdc++.h>
+#define int long long
+#define MOD 1000000007
+#define INF 1e18
+#define MAXN 100005
+#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
+#define REP(i, n) FOR(i, 1, n)
+#define all(a) (a).begin(), (a).end()
+#define pb push_back
+#define fi first
+#define se second
+#define pii pair<int, int>
+#define task ""
 
-}
-else l =mid+1;
-}
-return ans ;
-}
-int main ( ) {
-i o s : : sync _w i th _s td i o ( 0 ) ; c in . t i e ( ) ;
-c in >> n >> q ;
-for ( i = 1 ; i <= n ; i ++) c in >> a [ i ] ;
-p [ 1 ] = a [ 1 ] ;
-for ( i = 2 ; i <= n ; i ++)
-p [ i ] = min ( p [ i
+using namespace std;
+const int N = 1e6 + 9;
 
-−1] , a [ i ] ) ;
-for ( i = 1 ; i <= n ; i ++)
-ma=max (ma , i
 
-− bns ( a [ i ]
-−q ) ) ;
-for ( i = 1 ; i <= n ; i ++ ) {
-int t = bns ( a [ i ]
-−q ) ;
-i f ( i
-−t == ma ) {
-cout << t << " " << i ;
-return 0;
+void logic() {
+    cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        
+    }
 }
+
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    if (fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
+    }
+
+    logic();
+
+    return 0;
 }
-cout << 0;
-return 0;
