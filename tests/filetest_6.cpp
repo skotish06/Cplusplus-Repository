@@ -1,24 +1,30 @@
 #include <bits/stdc++.h>
 #define int long long
-#define MOD 1000000007
-#define INF 1e18
-#define MAXN 100005
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
-#define all(a) (a).begin(), (a).end()
-#define pb push_back
-#define fi first
-#define se second
-#define pii pair<int, int>
-#define task ""
-
 using namespace std;
-const int N = 1e6 + 9;
+
 string s;
+stack<int> st;
+int cnt = 0, ans = 0;
 
 void logic() {
-    getline(cin, s);
-    cout << s << '\n' << s << '\n' << s;
+    cin >> s;  
+    for (char c : s) {
+        if (c == '0') {
+            st.push(0);
+        }
+        else { // c == '1'
+            if (!st.empty()) {
+                st.pop();
+                ++cnt;
+            }
+            else {
+                ans = max(ans, cnt);
+                cnt = 0;
+            }
+        }
+    }
+    ans = max(ans, cnt); // Cập nhật lần cuối nếu còn `cnt`
+    cout << 2 * ans;
 }
 
 int32_t main() {
@@ -26,12 +32,6 @@ int32_t main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
-    }
-
     logic();
-
     return 0;
 }

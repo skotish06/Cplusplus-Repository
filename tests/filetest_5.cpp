@@ -2,35 +2,26 @@
 #define int long long
 #define MOD 1000000007
 #define INF 1e18
-#define MAXN 10000006
+#define MAXN 100005
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
 #define REP(i, n) FOR(i, 1, n)
 #define all(a) (a).begin(), (a).end()
 #define pb push_back
 #define fi first
 #define se second
-#define task "SUB"
+#define pii pair<int, int>
+#define task ""
 
 using namespace std;
-
 const int N = 1e6 + 9;
-int n, q, a[N], s, l, res = 1e18;
+
 
 void logic() {
-    cin >> n >> q;
-    FOR(i, 1, n) {
-        cin >> a[i];
-        
+    string s; getline(cin, s);
+    reverse(s.begin(), s.end());
+    for (int i = 0; i < s.size(); ++i) {
+        cout << s[i];
     }
-    l = 1;
-    FOR(r, 1, n) {
-        s += a[r];
-        while (s >= q) {
-            res = min(res, r - l + 1);
-            s -= a[l++];
-        }
-    }
-    cout << res;
 }
 
 int32_t main() {

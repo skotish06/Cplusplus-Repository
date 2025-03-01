@@ -1,55 +1,41 @@
 #include <bits/stdc++.h>
-#define int long long
-#define MOD 1000000007
-#define INF 1e18
-#define MAXN 100005
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
-#define all(a) (a).begin(), (a).end()
-#define pb push_back
+#define skibidi                       \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);                       \
+    cout.tie(0);
+#define file(tenfile)                         \
+    if (fopen(tenfile ".inp", "r"))           \
+    {                                         \
+        freopen(tenfile ".inp", "r", stdin);  \
+        freopen(tenfile ".out", "w", stdout); \
+    }
+#define ll long long
 #define fi first
 #define se second
-#define pii pair<int, int>
-#define task "TEAM"
-
+#define endl "\n"
 using namespace std;
-const int N = 1e6 + 9;
-int n, k, ans;
-int a[N], cnt[N];
-
-int c(int x) {
-    return (x * (x - 1)) / 2;
-}
-
-void logic() {
-    cin >> n >> k;
-    REP(i, n) {
+const int N = 1e6 + 69;
+ll a[N], n, k, f[N], ans = 0, s[N];
+void sol()
+{
+    for (int i = 1; i <= n; i++)
+    {
         cin >> a[i];
-        if (a[i] >= k) {
-            ++cnt[a[i]];
-        }
+        s[i] = s[i - 1] + a[i];
     }
-
-    for (int i = 0; i < N; i++) {
-        if (cnt[i] >= 2) {
-            ans += c(cnt[i]);
-        }
+    for (int i = 1; i <= n; i++)
+    {
+        ll id = lower_bound(s + 1, s + n + 1, s[i] - k) - s;
+        f[i] = 2 * f[id - 1] + i;
     }
-    
+    for (int i = 1; i <= n; i++)
+        ans += f[i];
     cout << ans;
 }
-
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
-    }
-
-    logic();
-
-    return 0;
+main()
+{
+    skibidi;
+    // file("ql")
+    cin >> n >> k;
+    sol();
 }
