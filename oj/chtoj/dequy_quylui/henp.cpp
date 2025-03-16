@@ -14,16 +14,23 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int n;
 
+string dtb(int n) {
+  string bin = ""; 
+  while (n > 0) {
+      int bit = n & 1;
+      bin.push_back('0' + bit);
+      n = n >> 1;
+  }  
+  reverse(bin.begin(), bin.end());
+  return bin;
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
-    }
+    while (cin >> n) {
+        cout << dtb(n) << '\n';
+    } 
 }
 
 int32_t main() {

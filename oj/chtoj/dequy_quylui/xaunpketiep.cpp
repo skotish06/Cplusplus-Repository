@@ -14,16 +14,27 @@
 
 using namespace std;
 const int N = 1e6 + 9;
-
+int pos = LLONG_MIN;
+string s, p;
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+    cin >> s;
+    p = s;
+    for (int i = s.size() - 1; i >= 0; --i) {
+        if (s[i] == '0') {
+            pos = i;
+            break;
+        }
     }
-    else {
-        cout << "YES";
+    if (pos == LLONG_MIN) {
+        cout << "NOTAVAILABLE";
+        return;
     }
+    p[pos] = '1';
+    for (int i = pos + 1; i < s.size(); ++i) {
+        p[i] = '0';
+    }
+    cout << p << '\n';
 }
 
 int32_t main() {

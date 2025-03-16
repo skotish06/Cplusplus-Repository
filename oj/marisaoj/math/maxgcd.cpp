@@ -14,16 +14,26 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int n;
+int a[N];
+int ans = LLONG_MIN;
+
+void bruteforce() {
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i + 1; j <= n; ++j) {
+            ans = max(ans, __gcd(a[i], a[j]));
+        }
+    }
+    cout << ans;
+}
 
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
     }
-    else {
-        cout << "YES";
-    }
+    bruteforce();
 }
 
 int32_t main() {

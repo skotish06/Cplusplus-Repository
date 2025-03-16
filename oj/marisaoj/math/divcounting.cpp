@@ -14,16 +14,27 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int l, r;
+int p[N];
+int pre[N];
 
+void div_count() {
+    fill (p + 1, p + N + 1, 2);
+    for (int i = 2; i * i <= N; ++i) {
+        p[i * i]--;
+        for (int j = i * i; j <= N; j += i) {
+            p[j] += 2;
+        }
+    }
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+    div_count();
+    for (int i = 1; i <= N; ++i) {
+        pre[i] = pre[i - 1] + p[i];
     }
-    else {
-        cout << "YES";
-    }
+    cin >> l >> r;
+    cout << pre[r] - pre[l - 1];
 }
 
 int32_t main() {
@@ -35,8 +46,10 @@ int32_t main() {
         freopen(task ".inp", "r", stdin);
         freopen(task ".out", "w", stdout);
     }
-
-    logic();
+    int q; cin >> q;
+    while (q--) {
+        logic();
+    }
 
     return 0;
 }

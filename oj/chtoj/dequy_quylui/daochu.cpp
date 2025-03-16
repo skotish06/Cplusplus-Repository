@@ -14,16 +14,18 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+string s, c;
+int cnt;
 
-
-void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+void logic(){
+    string s; cin >> s;
+    sort (s.begin(), s.end());
+    do {
+        ++cnt;
+        c += s; c += '\n';
     }
-    else {
-        cout << "YES";
-    }
+    while (next_permutation(s.begin(), s.end()));
+    cout << cnt << '\n' << c;
 }
 
 int32_t main() {

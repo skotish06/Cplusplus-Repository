@@ -14,16 +14,23 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int f[N];
+int n;
 
+void sieve(int x) {
+    for (int i = 2; i <= x; ++i) {
+        if (f[i] == 0) {
+            for (int j = i; j <= x; j += i) {
+                f[j] = i;
+            }
+        }
+    }
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
-    }
+    cin >> n;
+    sieve(n);
+    cout << f[n];
 }
 
 int32_t main() {

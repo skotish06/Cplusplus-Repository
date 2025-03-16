@@ -10,20 +10,42 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "ENUM"
 
 using namespace std;
 const int N = 1e6 + 9;
+int n;
+int a[N];
 
-
-void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+void ql(int i, int op, int cl) {
+    if (op > n / 2 or cl > op) {
+        return;
+    }
+    if (i > n) {
+        for (int j = 1; j <= n; ++j) {
+            if (a[j] == 0) cout << "(";
+            else cout << ")";
+        }
+        cout << '\n';
     }
     else {
-        cout << "YES";
+        for (int j = 0; j <= 1; ++j) {
+            if (j == 0) {
+                a[i] = j;
+                ql(i + 1, op + 1, cl);
+            }
+            else {
+                a[i] = j;
+                ql(i + 1, op, cl + 1);
+            }
+        }
     }
+}
+
+void logic() {
+    cin >> n;
+    if (n & 1) return;
+    ql(1, 0, 0);
 }
 
 int32_t main() {

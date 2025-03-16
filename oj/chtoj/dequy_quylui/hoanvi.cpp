@@ -14,16 +14,31 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int a[N];
+bool c[N];
 
+void btrack(int i, int n) {
+    if (i > n) {
+        for (int i = 1; i <= n; ++i) {
+            cout << a[i] << ' ';
+        }
+        cout << '\n';
+    }
+    else {
+        for (int j = 1; j <= n; ++j) {
+            if (c[j] == false) {
+                c[j] = true;
+                a[i] = j;
+                btrack(i + 1, n);
+                c[j] = false;
+            }
+        }
+    }
+}
 
 void logic() {
     int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
-    }
+    btrack(1, n);
 }
 
 int32_t main() {

@@ -10,34 +10,15 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "SPASTA"
+#define task ""
 
 using namespace std;
 const int N = 1e6 + 9;
-int m, k, n, t;
-int a[N], i, ans;
+
 
 void logic() {
-    cin >> m >> k >> n >> t;
-    if (m - n < k) {
-        cout << -1;
-        return;
-    }
-    ans = k * t;
-    ans += k * (k + 1) / 2;
-    for (i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a + 1, a + n + 1);
-    for (i = 1; i <= n; ++i) {
-        if (a[i] <= k) {
-            ans -= a[i];
-            k += 1;
-            ans += k;
-        }
-        else break;
-    }
-    cout << ans;
+    cin >> n;
+    
 }
 
 int32_t main() {

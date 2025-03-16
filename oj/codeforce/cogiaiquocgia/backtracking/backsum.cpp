@@ -17,6 +17,7 @@ const int N = 1e6 + 9;
 int n, k, m;
 int a[N];
 int sum;
+pair<vector<int, int>, int> z;
 
 void ql(int i) {
     if (i > n) {

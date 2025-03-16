@@ -15,14 +15,18 @@
 using namespace std;
 const int N = 1e6 + 9;
 
+int binpow(int a, int b, int m) {
+    if (b == 0) return 1;
+    int res = binpow(a, b / 2, m);
+    res = (res * res) % m;
+    if (b % 2) res = (res * a) % m;
+    return res;
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
+    int a, b, m; 
+    while (cin >> a >> b >> m) {
+        cout << binpow(a, b, m) << '\n';
     }
 }
 

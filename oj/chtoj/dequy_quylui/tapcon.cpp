@@ -14,16 +14,33 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int n, k;
+int a[N];
 
+void init() {
+    iota(a, a + k, 0);
+}
+
+bool nextgen() {
+    int i = k - 1;
+    while (i >= 0 and a[i] == n - k + i) {
+        --i;
+    }
+    if (i < 0) return false;
+    iota(a + i, a + k, a[i] + 1);
+    return true;
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+    cin >> n >> k;
+    init();
+    do {
+        for (int i = 0; i < k; ++i) {
+            cout << a[i] + 1 << ' ';
+        }
+        cout << '\n';
     }
-    else {
-        cout << "YES";
-    }
+    while (nextgen());
 }
 
 int32_t main() {

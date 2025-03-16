@@ -15,15 +15,12 @@
 using namespace std;
 const int N = 1e6 + 9;
 
-
-void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
-    }
+void logic(){
+    string s, ans; cin >> s;
+    ans = s;
+    next_permutation(ans.begin(), ans.end());
+    if (ans > s) cout << ans;
+    else cout << "NOTAVAILABLE";
 }
 
 int32_t main() {

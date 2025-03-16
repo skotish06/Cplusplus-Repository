@@ -6,7 +6,8 @@ using namespace std;
 const int N = 1e6 + 9;
 
 void solve() {
-
+    int n; cin >> n;
+    cout << 2 * n;
 }
 
 main() {

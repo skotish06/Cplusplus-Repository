@@ -13,16 +13,27 @@
 #define task ""
 
 using namespace std;
-const int N = 1e6 + 9;
+const int N = 2e6 + 9;
+bool f[N];
+int n;
 
+void sieve() {
+    memset (f, true, sizeof(f));
+    f[0] = f[1] = false;
+    for (int i = 2; i * i <= N; ++i) {
+        if (f[i]) {
+            for (int j = i * i; j <= N; j += i) {
+                f[j] = false;
+            }
+        }
+    }
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
+    sieve();
+    cin >> n;
+    for (int i = 2; i <= n; ++i) {
+        if (f[i]) cout << i << ' ';
     }
 }
 

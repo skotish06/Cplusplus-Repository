@@ -14,15 +14,23 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int f[N];
+int a, b;
 
+void seg_sieve(int l, int r) {
+    int i, j;
+    for (int i = 2; i * i <= r; ++i) {
+        for (int j = max(i * i, (l + i - 1) / i * i); j <= r; j += i) {
+            ++f[j - l];
+        }
+    }
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
-    }
-    else {
-        cout << "YES";
+    cin >> a >> b;
+    seg_sieve(a, b);
+    for (int i = max(2LL, a); i <= b; ++i) {
+        if (f[i - a] == 0) cout << i << ' ';
     }
 }
 

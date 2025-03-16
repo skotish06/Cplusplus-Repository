@@ -10,20 +10,37 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "IPARA"
 
 using namespace std;
 const int N = 1e6 + 9;
 
+int n, a[N], s, cnt;
 
-void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+void ql(int i) {
+    if (s >= n) {
+        cout << a[0] << ' ';
+        for (int j = 1; j < i; ++j) {
+            cout << a[j] << ' ';
+        }
+        ++cnt;
+        cout << '\n';
     }
     else {
-        cout << "YES";
-    }
+        int l = (i == 0) ? 1 : a[i - 1];
+        for (a[i] = l; s + a[i] <= n; ++a[i]) {
+            s += a[i];
+            ql(i + 1);
+            s -= a[i];
+        }
+    }  
+}
+
+void logic() {
+    cin >> n;
+    int s = 0;
+    ql(0);
+    cout << cnt;
 }
 
 int32_t main() {

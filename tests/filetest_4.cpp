@@ -1,41 +1,65 @@
 #include <bits/stdc++.h>
-#define skibidi                       \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0);                       \
-    cout.tie(0);
-#define file(tenfile)                         \
-    if (fopen(tenfile ".inp", "r"))           \
-    {                                         \
-        freopen(tenfile ".inp", "r", stdin);  \
-        freopen(tenfile ".out", "w", stdout); \
-    }
-#define ll long long
+#define task "nqueens"
+#define int long long
+#define ii std::pair<int, int>
+#define iii std::pair<ii, int>
 #define fi first
 #define se second
-#define endl "\n"
-using namespace std;
-const int N = 1e6 + 69;
-ll a[N], n, k, f[N], ans = 0, s[N];
-void sol()
+#define pb push_back
+#define ins insert
+
+const int maxn = 1e5;
+const int inf = 1e18;
+
+int n;
+std::vector<ii> ans;
+
+signed main()
 {
-    for (int i = 1; i <= n; i++)
+    std::ios_base::sync_with_stdio(0);
+    std::cin.tie(0);
+    std::cout.tie(0);
+
+    if (std::fopen(task ".inp", "r"))
     {
-        cin >> a[i];
-        s[i] = s[i - 1] + a[i];
+        std::freopen(task ".inp", "r", stdin);
+        std::freopen(task ".out", "w", stdout);
     }
-    for (int i = 1; i <= n; i++)
+
+    std::cin >> n;
+    
+    if (n == 2 || n == 3)
     {
-        ll id = lower_bound(s + 1, s + n + 1, s[i] - k) - s;
-        f[i] = 2 * f[id - 1] + i;
+        std::cout << "NO";
+        return 0;
     }
-    for (int i = 1; i <= n; i++)
-        ans += f[i];
-    cout << ans;
-}
-main()
-{
-    skibidi;
-    // file("ql")
-    cin >> n >> k;
-    sol();
+    
+    if (n % 2 == 0)
+    {
+        for (int i = 1; i <= n / 2; i++)
+        {
+            ans.pb({i, 2 * i});
+        }
+        for (int i = n / 2 + 1; i <= n; i++)
+        {
+            ans.pb({i, 2 * (i - n / 2) - 1});
+        }
+    }
+    else
+    {
+        int m = n - 1;
+        for (int i = 1; i <= m / 2; i++)
+        {
+            ans.pb({i, 2 * i});
+        }
+        for (int i = m / 2 + 1; i <= m; i++)
+        {
+            ans.pb({i, 2 * (i - m / 2) - 1});
+        }
+        ans.pb({n, n});
+    }
+
+    std::cout << "YES\n";
+
+    return 0;
 }

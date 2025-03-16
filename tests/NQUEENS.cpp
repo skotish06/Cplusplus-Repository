@@ -10,19 +10,30 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "NQUEENS"
 
 using namespace std;
 const int N = 1e6 + 9;
-
+int n;
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
+    cin >> n;
+    if (n == 2 or n == 3) {
         cout << "NO";
+        return;
     }
-    else {
-        cout << "YES";
+    cout << "YES";
+    cout << '\n';
+    int j = 1;
+    int m = (n % 2 == 0) ? n / 2 : n / 2 + 1;
+    for (int i = 1; i <= m; ++i) {
+        cout << i << ' ' << j << '\n';
+        j += 2;
+    }
+    j = 2;
+    for (int i = m + 1; i <= n; ++i) {
+        cout << i << ' ' << j << '\n';
+        j += 2;
     }
 }
 
