@@ -10,19 +10,46 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "PERMUTATION"
 
 using namespace std;
 const int N = 1e6 + 9;
+int n, k;
+int cnt;
+int f[N], a[N];
+bool c[N] = {false};
+int pos;
 
+void fac() {
+    f[0] = 1;
+    for (int i = 1; i <= 25; i++) {
+        f[i] = f[i - 1] * i;
+    }
+}
 
 void logic() {
-    int n; cin >> n;
-    if (n & 1) {
-        cout << "NO";
+    while (cin.peek() != '\n' and cin >> n) {
+        a[++cnt] = n;
     }
-    else {
-        cout << "YES";
+    cin >> k;
+    pos = 1;
+    for (int i = 1; i <= cnt; ++i){
+        for (int j = i; j < a[i]; ++j)
+            pos += f[cnt - i];
+    }
+    cout << pos << '\n';
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++) {
+            if (!c[j]) {
+                if (k <= f[n - i]) {
+                    cout << j << ' ';
+                    c[j] = true;
+                } 
+                else {
+                    k -= f[n - i];
+                }
+            }
+        }
     }
 }
 
@@ -36,6 +63,7 @@ int32_t main() {
         freopen(task ".out", "w", stdout);
     }
 
+    fac();
     logic();
 
     return 0;

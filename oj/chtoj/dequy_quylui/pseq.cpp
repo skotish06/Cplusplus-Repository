@@ -15,8 +15,8 @@
 using namespace std;
 const int N = 1e6 + 9;
 int n;
+vector<int> odd, even, tmp;
 bool f[N];
-deque<int> dq;
 
 void sieve() {
     memset(f, true, sizeof(f));
@@ -34,12 +34,35 @@ void logic() {
     sieve();
     cin >> n;
     for (int i = 1; i <= 2 * n; ++i) {
-        dq.push_back(i);
+        if (i & 1) odd.push_back(i);
+        else even.push_back(i);
     }
-    for (int i = 1; i <= 2 * n; ++i) {
+    tmp.resize(2 * n + 1);
+    tmp[1] = 1;
+    for (int i = 2; i <= 2 * n; ++i) {
+        if (i & 1) {
+            for (int j = odd.size() - 1; j >= 0; --j) {
+                if (f[tmp[i - 1] + odd[j]]) {
+                    tmp[i] = odd[j];
+                    odd.erase(odd.begin() + j);
+                    break;
+                }
+            }
+        }
+        else {
+            for (int j = even.size() - 1; j >= 0; --j) {
+                if (f[tmp[i - 1] + even[j]]) {
+                    tmp[i] = even[j];
+                    even.erase(even.begin() + j);
+                    break;
+                }
+            }
+        }
+    }
 
+    for (int i = 1; i < (int)tmp.size(); ++i) {
+        cout << tmp[i] << " ";
     }
-    41665
 }
 
 int32_t main() {
@@ -56,3 +79,7 @@ int32_t main() {
 
     return 0;
 }
+
+
+
+// inspired by nm

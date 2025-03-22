@@ -10,51 +10,36 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "NQUEENS"
+#define task ""
 
-const int N = 100;
-int n;
-bool c[N], cp[N], ct[N];
-int pos[N]; 
-bool found = false;
+using namespace std;
+const int N = 1e6 + 9;
+int n, k;
+int a[N];
+bool c[N];
 
 void ql(int i) {
-    if (i > n) {
-        found = true;
-        return;
+    if (i > k) {
+        for (int i = 1; i <= k; ++i) {
+            cout << a[i] << ' ';
+        }
+        cout << '\n';
     }
     else {
         for (int j = 1; j <= n; ++j) {
-            if (!c[j] && !cp[i - j + n] && !ct[i + j]) {
+            if (c[j] == false) {
                 c[j] = true;
-                cp[i - j + n] = true;
-                ct[i + j] = true;
-                pos[i] = j; 
+                a[i] = j;
                 ql(i + 1);
-                if (found) {
-                    return;
-                }
                 c[j] = false;
-                cp[i - j + n] = false;
-                ct[i + j] = false;            
             }
         }
     }
 }
 
 void logic() {
-    cin >> n;
+    cin >> n >> k;
     ql(1);
-    if (found) {
-        cout << "YES" << '\n';
-        for (int i = 1; i <= n; ++i) {
-            cout << i << ' ' << pos[i] << '\n';
-        }
-    }
-    else {
-        cout << "NO";
-        return;
-    }
 }
 
 int32_t main() {
@@ -71,4 +56,3 @@ int32_t main() {
 
     return 0;
 }
-

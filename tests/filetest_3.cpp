@@ -4,43 +4,40 @@
 #define INF 1e18
 #define MAXN 100005
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
 #define all(a) (a).begin(), (a).end()
 #define pb push_back
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "NECK"
+#define task "COMBIN"
 
 using namespace std;
-const int N = 1e6 + 9;
-int n;
-int a[N];
-deque<int> dq;
-map<int, int> mp;
+const int N = 25;
+int n, k, m;
+vector<int> a;
+int cnt;
+
+void ql(int i) {
+    if (a.size() >= k) {
+        if (cnt == m) {
+            for (int x : a) cout << x << ' ';
+            cout << '\n';
+            exit(0);
+        }
+        cnt++;
+    }
+    else {
+        for (int j = i; j <= n; ++j) {
+            a.push_back(j);
+            ql(j + 1);
+            a.pop_back();
+        }
+    }
+}
 
 void logic() {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-        ++mp[a[i]];
-    }
-    dq.push_back(a[1]);
-    for (int i = 2; i <= n; ++i) {
-        if (a[i] > dq.back()) {
-            dq.push_back(a[i]);
-        }
-        else if (a[i] < dq.front()) {
-            dq.push_front(a[i]);
-        }
-        else if (a[i] < dq.back() and a[i] > dq.front()) {
-            continue;
-        }
-        else if (mp[a[i]] > 1) {
-            continue;
-        }
-    }
-    cout << dq.size();
+    cin >> n >> k >> m;
+    ql(1);
 }
 
 int32_t main() {
@@ -54,6 +51,5 @@ int32_t main() {
     }
 
     logic();
-
     return 0;
 }

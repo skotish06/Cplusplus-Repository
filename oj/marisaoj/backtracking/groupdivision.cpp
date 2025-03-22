@@ -14,13 +14,42 @@
 
 using namespace std;
 const int N = 1e6 + 9;
+int n, k;
+int a[N];
+int c[N];
+int p[N];
+int cnt;
+set<int> s;
 
+void ql(int i) {
+    if (i > n) {
+        s.clear();
+        for (int i = 1; i <= k; ++i) {
+            s.insert(c[i]);
+        }
+        if ((int)s.size() == 1 and cnt != 1) {
+            for (int i = 1; i <= n; ++i) {
+                cout << p[i] << ' ';
+            }
+            ++cnt;
+        }
+    }
+    else {
+        for (int j = 1; j <= k; ++j) {
+            c[j] += a[i];
+            p[i] = j;
+            ql(i + 1);
+            c[j] -= a[i];
+        }
+    }
+}
 
 void logic() {
-    cin >> n;
+    cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
-        
+        cin >> a[i];
     }
+    ql(1);
 }
 
 int32_t main() {

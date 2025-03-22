@@ -14,12 +14,19 @@
 
 using namespace std;
 const int N = 1e6 + 9;
-
+string s;
+int n;
 
 void logic() {
     cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        
+    while (n--) {
+        cin >> s;
+        if (s.size() <= 10) {
+            cout << s << '\n';
+        }
+        else {
+            cout << s[0] << s.size() - 2 << s[(int)s.size() - 1] << '\n';
+        }
     }
 }
 

@@ -13,28 +13,78 @@
 #define task "NQUEENS"
 
 using namespace std;
-const int N = 1e6 + 9;
+const int N = 100;
 int n;
+bool c[N], cp[N], ct[N];
+int pos[N]; 
+bool found = false;
+vector<pii> qns;
 
-void logic() {
-    cin >> n;
-    if (n == 2 or n == 3) {
+void ql(int i) {
+    if (i > n) {
+        found = true;
+        return;
+    }
+    else {
+        for (int j = 1; j <= n; ++j) {
+            if (!c[j] && !cp[i - j + n] && !ct[i + j]) {
+                c[j] = cp[i - j + n] = ct[i + j] = true;
+                pos[i] = j; 
+                ql(i + 1);
+                if (found) {
+                    return;
+                }
+                c[j] = cp[i - j + n] = ct[i + j] = false;            
+            }
+        }
+    }
+}
+
+void sub12() {
+    ql(1);
+    if (found) {
+        cout << "YES" << '\n';
+        for (int i = 1; i <= n; ++i) {
+            cout << i << ' ' << pos[i] << '\n';
+        }
+    }
+    else {
         cout << "NO";
         return;
     }
-    cout << "YES";
-    cout << '\n';
-    int j = 1;
-    int m = (n % 2 == 0) ? n / 2 : n / 2 + 1;
-    for (int i = 1; i <= m; ++i) {
-        cout << i << ' ' << j << '\n';
-        j += 2;
+}
+
+void sub3() {
+    if (n == 1) {
+        cout << "YES\n1 1\n";
+        return;
     }
-    j = 2;
-    for (int i = m + 1; i <= n; ++i) {
-        cout << i << ' ' << j << '\n';
-        j += 2;
+    if (n == 2 || n == 3) {
+        cout << "NO\n";
+        return;
     }
+    int mid = n / 2;
+        for (int i = 1; i <= mid; ++i) {
+        qns.pb({i, 2 * i});
+    }
+    for (int i = 1; i <= mid; ++i) {
+        qns.pb({mid + i, 2 * i - 1});
+    }
+    if (n & 1) {
+        qns.pb({n, n});
+    }
+    cout << "YES\n";
+    for (auto [x, y] : qns) {
+        cout << x << ' ' << y << '\n';
+    }
+}
+
+
+void logic() {
+    cin >> n;
+    // if (n <= 20) sub12();
+    // else sub3();
+    sub3();
 }
 
 int32_t main() {
