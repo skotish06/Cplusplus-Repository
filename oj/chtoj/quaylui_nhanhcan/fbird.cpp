@@ -14,32 +14,20 @@
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, k, a[N], sum;
-vector<int> ans;
 
-void ql(int i) {
-    if (sum == k) {
-        cout << "YES\n";
-        sort(ans.begin(), ans.end());
-        for (auto x : ans) cout << x << ' ';
-        exit(0);
-    }
-    if (i > n or sum > k) return;
-    ans.push_back(a[i]);
-    sum += a[i];
-    ql(i + 1);
-    ans.pop_back();
-    sum -= a[i];
-    ql(i + 1);
-}
 
 void logic() {
-    cin >> n >> k;
+    cin >> n >> m >> w;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        for (int j = 1; j <= m; ++j) {
+            cin >> a[i][j];
+        }
     }
-    ql(1);
-    cout << "NO\n";
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            dp[i][j] = 
+        }
+    }
 }
 
 int32_t main() {

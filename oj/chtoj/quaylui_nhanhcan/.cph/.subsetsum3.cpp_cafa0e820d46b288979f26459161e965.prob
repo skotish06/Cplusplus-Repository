@@ -1,0 +1,1 @@
+{"name":"Local: subsetsum3","url":"/home/shouko/Documents/workspaces/oj/chtoj/quaylui_nhanhcan/subsetsum3.cpp","tests":[{"id":1742702460614,"input":"6 8\n3 6 5 8 2 1","output":"7\n3 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/shouko/Documents/workspaces/oj/chtoj/quaylui_nhanhcan/subsetsum3.cpp","group":"local","local":true}

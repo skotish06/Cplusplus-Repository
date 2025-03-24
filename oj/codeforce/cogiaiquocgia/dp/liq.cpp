@@ -14,32 +14,27 @@
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, k, a[N], sum;
-vector<int> ans;
-
-void ql(int i) {
-    if (sum == k) {
-        cout << "YES\n";
-        sort(ans.begin(), ans.end());
-        for (auto x : ans) cout << x << ' ';
-        exit(0);
-    }
-    if (i > n or sum > k) return;
-    ans.push_back(a[i]);
-    sum += a[i];
-    ql(i + 1);
-    ans.pop_back();
-    sum -= a[i];
-    ql(i + 1);
-}
+int n;
+int a[N], dp[N];
+int ans;
 
 void logic() {
-    cin >> n >> k;
+    cin >> n;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
     }
-    ql(1);
-    cout << "NO\n";
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = 1;
+        for (int j = 1; j <= i - 1; ++j) {
+            if (a[j] < a[i]) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+    }
+    for (int i = 1; i <= n; ++i) {
+        ans = max(ans, dp[i]);
+    }
+    cout << ans;
 }
 
 int32_t main() {

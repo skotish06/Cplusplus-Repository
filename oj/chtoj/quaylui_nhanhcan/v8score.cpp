@@ -10,49 +10,33 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "SUBSETSUM3"
+#define task ""
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, k;
-int f[N], a[N];
-int sum, ans;
-vector<int> p, pos;
+int n, m;
+int f[N];
 
 void ql(int i) {
-    if (ans == k - 1) return;
-    if (i > n) {
-        if (sum > ans) {
-            ans = sum;
-            pos = p;
+    if (i > m) {
+        for (int i = 1; i <= n; ++i) {
+            cout << f[i] << ' ';
         }
-    } else {
-        for (int j = 0; j <= 1; ++j) {
-            if (sum >= k) return; 
-            if (j == 0) {
+        cout << '\n';
+    }
+    else {
+        for (int j = 1; j <= n; ++j) {
+            for (int k = 0; k <= 1; ++k) {
+                f[j] = k;
                 ql(i + 1);
-            }
-            if (j == 1 and sum + a[i] < k) {
-                sum += a[i];
-                p.push_back(i);
-                ql(i + 1);
-                p.pop_back();
-                sum -= a[i];
             }
         }
     }
 }
 
 void logic() {
-    cin >> n >> k;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-    }
+    cin >> n >> m;
     ql(1);
-    cout << ans << '\n';
-    for (auto x : pos) {
-        cout << x << ' ';
-    }
 }
 
 int32_t main() {

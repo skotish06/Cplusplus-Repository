@@ -18,8 +18,9 @@ int n, k;
 int f[N], a[N];
 int sum, ans;
 vector<int> p, pos;
+int pre[N];
 
-void ql(int i) {
+void ql(int i, int sum) {
     if (ans == k - 1) return;
     if (i > n) {
         if (sum > ans) {
@@ -28,16 +29,14 @@ void ql(int i) {
         }
     } else {
         for (int j = 0; j <= 1; ++j) {
-            if (sum >= k) return; 
+            if (sum >= k || sum + pre[n] - pre[i - 1] <= ans) return; 
             if (j == 0) {
-                ql(i + 1);
+                ql(i + 1, sum);
             }
-            if (j == 1 and sum + a[i] < k) {
-                sum += a[i];
+            if (j == 1 && sum + a[i] < k) {
                 p.push_back(i);
-                ql(i + 1);
+                ql(i + 1, sum + a[i]);
                 p.pop_back();
-                sum -= a[i];
             }
         }
     }
@@ -47,8 +46,9 @@ void logic() {
     cin >> n >> k;
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
+        pre[i] = pre[i - 1] + a[i];
     }
-    ql(1);
+    ql(1, 0);
     cout << ans << '\n';
     for (auto x : pos) {
         cout << x << ' ';

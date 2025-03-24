@@ -10,47 +10,49 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "SUBSETSUM3"
+#define task "KSACK1"
 
 using namespace std;
+
 const int N = 1e6 + 9;
-int n, k;
-int f[N], a[N];
-int sum, ans;
-vector<int> p, pos;
+int n, v;
+pii a[N];
+int we = 0, va = 0, ans = 0;
+vector<int> w, w_ans;
 
 void ql(int i) {
-    if (ans == k - 1) return;
-    if (i > n) {
-        if (sum > ans) {
-            ans = sum;
-            pos = p;
+    if (we > v) return; 
+    if (i > n) { 
+        if (va > ans) { 
+            ans = va;
+            w_ans = w; 
         }
-    } else {
+    }
+    else {
         for (int j = 0; j <= 1; ++j) {
-            if (sum >= k) return; 
-            if (j == 0) {
+            if (j == 1) { 
                 ql(i + 1);
-            }
-            if (j == 1 and sum + a[i] < k) {
-                sum += a[i];
-                p.push_back(i);
+            } else { 
+                w.push_back(i);
+                we += a[i].fi;
+                va += a[i].se;
                 ql(i + 1);
-                p.pop_back();
-                sum -= a[i];
+                w.pop_back();
+                we -= a[i].fi;
+                va -= a[i].se;
             }
         }
     }
 }
 
 void logic() {
-    cin >> n >> k;
+    cin >> n >> v;
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        cin >> a[i].fi >> a[i].se;
     }
     ql(1);
     cout << ans << '\n';
-    for (auto x : pos) {
+    for (auto x : w_ans) {
         cout << x << ' ';
     }
 }
