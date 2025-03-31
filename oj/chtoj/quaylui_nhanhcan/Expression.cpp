@@ -10,29 +10,39 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "SUBSETSUM"
+#define task "Expression"
 
 using namespace std;
 const int N = 1e6 + 9;
-int n, k, a[N];
-vector<int> c;                          
+int n, k;
+int a[N];
+vector<char> c;
 int pre[N];
+int sum;
 
-bool ql(int i, int sum) {
-    if (sum > k) return false;
-    if (sum == k) {
-        cout << "YES\n";
-        for (int x : c) cout << x << ' ';
-        cout << '\n';
-        return true;
+void ql(int i) {
+    if (i > n) {
+        if (sum == k) {
+            for (auto x : c) {
+                cout << x;
+            }
+            exit(0);
+        } 
     }
-    if (i > n || sum + pre[n] - pre[i - 1] < k) return false; 
     else {
-        if (ql(i + 1, sum)) return true;
-        c.push_back(i);
-        if (ql(i + 1, sum + a[i])) return true;
-        c.pop_back(); 
-        return false;
+        if (sum + pre[n] - pre[i - 1] < k || sum - (pre[n] - pre[i - 1]) > k) {
+            return;
+        }
+        c.push_back('+');
+        sum += a[i];
+        ql(i + 1);
+        sum -= a[i];
+        c.pop_back();
+        c.push_back('-');
+        sum -= a[i];
+        ql(i + 1);
+        sum += a[i];
+        c.pop_back();
     }
 }
 
@@ -42,7 +52,8 @@ void logic() {
         cin >> a[i];
         pre[i] = pre[i - 1] + a[i]; 
     }
-    if (!ql(1, 0)) cout << "NO\n";
+    sum = a[1];
+    ql(2);
 }
 
 int32_t main() {

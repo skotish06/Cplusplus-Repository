@@ -10,61 +10,59 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task "PERMUTATION"
+#define task ""
 
 using namespace std;
-const int N = 1e6 + 9;
-int n, k;
-int cnt;
-int f[N], a[N];
-bool c[N] = {false};
-int pos;
+const int N = 25;
+int n, m, w;
+int a[N][N], Max = -1, mx[N];
+bool stop;
 
-void fac() {
-    f[0] = 1;
-    for (int i = 1; i <= 25; i++) {
-        f[i] = f[i - 1] * i;
+void ql(int i, int last, int sum) {
+    if (stop) return;
+    if (sum + mx[i] < Max || sum > w) return;
+    if (i > n) {
+        Max = max(Max, sum);
+        if (Max == w) {
+            stop = 1;
+        }
+        return;
+    }
+    for (int j = m; j >= 1; j--) {
+        if (a[i][j] < last) break;
+        if (sum + a[i][j] * (n - i + 1) > w) continue;
+        ql(i + 1, a[i][j], sum + a[i][j]);
     }
 }
 
 void logic() {
-    while (cin.peek() != '\n' and cin >> n) {
-        a[++cnt] = n;
-    }
-    cin >> k;
-    pos = 1;
-    for (int i = 1; i <= cnt; ++i){
-        for (int j = i; j < a[i]; ++j)
-            pos += f[cnt - i];
-    }
-    cout << pos << '\n';
-    for (int i = 1; i <= n; i++){
+    cin >> m >> n >> w;
+    for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            if (!c[j]) {
-                if (k <= f[n - i]) {
-                    cout << j << ' ';
-                    c[j] = true;
-                } 
-                else {
-                    k -= f[n - i];
-                }
-            }
+            cin >> a[j][i];
         }
     }
+    for (int i = 1; i <= n; i++) {
+        sort(a[i] + 1, a[i] + 1 + m);
+    }
+    for (int i = n; i >= 1; i--) {
+        mx[i] = mx[i + 1] + a[i][m];
+    }
+    ql(1, 0, 0);
+    cout << Max;
 }
 
 int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
-    }
+	if (fopen(task ".inp", "r")) {
+		freopen(task ".inp", "r", stdin);
+		freopen(task ".out", "w", stdout);
+	}
 
-    fac();
-    logic();
+	logic();
 
-    return 0;
+	return 0;
 }

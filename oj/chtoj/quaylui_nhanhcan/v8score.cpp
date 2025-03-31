@@ -10,33 +10,66 @@
 #define fi first
 #define se second
 #define pii pair<int, int>
-#define task ""
+#define task "V8SCORE"
 
 using namespace std;
-const int N = 1e6 + 9;
-int n, m;
-int f[N];
+const int N = 25;
+int n, m, k;
+int mat[N][N];
+int a[N][N];
+vector<pair<int, int>> v;
+int sum;
+bool cmp(pii x, pii y) {
+    return x.second < y.second;
+}
 
 void ql(int i) {
+    if (sum > k) return;
     if (i > m) {
-        for (int i = 1; i <= n; ++i) {
-            cout << f[i] << ' ';
+        if (sum == k) {
+            cout << "YES\n";
+            sort(v.begin(), v.end(), cmp);
+            for (auto p : v) {
+                cout << a[p.fi][p.se] << ' ';
+            }
+            exit(0);
         }
-        cout << '\n';
     }
     else {
         for (int j = 1; j <= n; ++j) {
-            for (int k = 0; k <= 1; ++k) {
-                f[j] = k;
+            if (mat[j][i-1] == 1) { 
+                if (a[j][i] >= a[j][i-1] and a[j - 1][i] >= a[j][i]) {
+                    sum += a[j][i];
+                    mat[j][i] = 1;
+                    v.push_back({j, i});
+                    ql(i + 1);
+                    v.pop_back();
+                    sum -= a[j][i];
+                    mat[j][i] = 0;
+                }
+            } else {
+                sum += a[j][i];
+                mat[j][i] = 1;
+                v.push_back({j, i});
                 ql(i + 1);
+                v.pop_back();
+                sum -= a[j][i];
+                mat[j][i] = 0;
             }
         }
     }
 }
 
 void logic() {
-    cin >> n >> m;
+    cin >> k >> m >> n;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            cin >> a[i][j];
+            mat[i][j] = 0;
+        }
+    }
     ql(1);
+    cout << "NO";
 }
 
 int32_t main() {

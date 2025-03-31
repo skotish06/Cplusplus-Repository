@@ -1,71 +1,59 @@
-#include <bits/stdc++.h>
-#define int long long
-#define MOD 1000000007
-#define INF 1e18
-#define MAXN 100005
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
-#define all(a) (a).begin(), (a).end()
-#define pb push_back
-#define fi first
-#define se second
-#define pii pair<int, int>
-#define task "SUBSETSUM3"
+const int pad = 1000058;
 
-using namespace std;
-const int N = 1e6 + 9;
-int n, k;
-int f[N], a[N];
-int sum, ans;
-vector<int> p, pos;
+int n, m;
+int pre[pad];
+pair<int, int> a[pad];
+vector<int> tmp, ans;
+int maxx = 0;
 
-void ql(int i) {
-    if (ans == k - 1) return;
+void backtrack(int i, int sum, int val) {
+    if (sum > m) return;
     if (i > n) {
-        if (sum > ans) {
-            ans = sum;
-            pos = p;
+        if (val > maxx) {
+            maxx = val;
+            ans = tmp;
         }
-    } else {
-        for (int j = 0; j <= 1; ++j) {
-            if (sum >= k) return; 
-            if (j == 0) {
-                ql(i + 1);
-            }
-            if (j == 1 and sum + a[i] < k) {
-                sum += a[i];
-                p.push_back(i);
-                ql(i + 1);
-                p.pop_back();
-                sum -= a[i];
-            }
-        }
+        return;
+    }
+    
+    if (sum + a[i].first <= m && val + a[i].second + pre[i] >= maxx) {
+        tmp.push_back(1);
+        backtrack(i + 1, sum + a[i].first, val + a[i].second);
+        tmp.pop_back();
+    }
+    
+    if (val + pre[i] >= maxx) {
+        tmp.push_back(0);
+        backtrack(i + 1, sum, val);
+        tmp.pop_back();
     }
 }
 
-void logic() {
-    cin >> n >> k;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-    }
-    ql(1);
-    cout << ans << '\n';
-    for (auto x : pos) {
-        cout << x << ' ';
-    }
-}
-
-int32_t main() {
+main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(NULL); cout.tie(NULL);
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+    if (fopen("KSACK1.inp", "r")) {
+        freopen("KSACK1.inp", "r", stdin);
+        freopen("KSACK1.out", "w", stdout);
+    }
+    cin >> n >> m;
+    
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].first >> a[i].second;
     }
 
-    logic();
-
-    return 0;
+    pre[n] = a[n].second;
+    for (int i = n-1; i >= 1; i--) {
+        pre[i] = pre[i+1] + a[i].second;
+    }
+    
+    backtrack(1, 0, 0);
+    
+    cout << maxx << '\n';
+    for (int i = 0; i < ans.size(); i++) {
+        if (ans[i] == 1) {
+            cout << i + 1 << " ";
+        }
+    }
 }
