@@ -1,59 +1,73 @@
-const int pad = 1000058;
+#include <bits/stdc++.h>
+#define int long long
+#define MOD 1000000007
+#define INF 1e18
+#define MAXN 100005
+#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
+#define REP(i, n) FOR(i, 1, n)
+#define all(a) (a).begin(), (a).end()
+#define pb push_back
+#define fi first
+#define se second
+#define pii pair<int, int>
+#define task ""
 
-int n, m;
-int pre[pad];
-pair<int, int> a[pad];
-vector<int> tmp, ans;
-int maxx = 0;
+using namespace std;
+const int N = 1e6 + 9;
+int a[N], res[N];
+int n;
+int l[N], r[N];
+stack<int> le, ri;
 
-void backtrack(int i, int sum, int val) {
-    if (sum > m) return;
-    if (i > n) {
-        if (val > maxx) {
-            maxx = val;
-            ans = tmp;
+void solve() {
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+        res[i] = 0;
+    }
+    for (int i = 1; i <= n; ++i) {
+        while (!le.empty() && a[le.top()] >= a[i]) {
+            le.pop();
         }
-        return;
+        while (!ri.empty() && a[ri.top()] >= a[n - i + 1]) {
+            ri.pop();
+        }
+        if (!le.empty()) {
+            l[i] = le.top();
+        } else {
+            l[i] = 0;
+        }
+        if (!ri.empty()) {
+            r[n - i + 1] = ri.top();
+        } else {
+            r[n - i + 1] = n + 1;
+        }
+        le.push(i);
+        ri.push(n - i + 1);
     }
-    
-    if (sum + a[i].first <= m && val + a[i].second + pre[i] >= maxx) {
-        tmp.push_back(1);
-        backtrack(i + 1, sum + a[i].first, val + a[i].second);
-        tmp.pop_back();
+    for (int i = 1; i <= n; ++i) {
+        int len = r[i] - l[i] - 1;
+        res[len] = max(res[len], a[i]);
     }
-    
-    if (val + pre[i] >= maxx) {
-        tmp.push_back(0);
-        backtrack(i + 1, sum, val);
-        tmp.pop_back();
+    for (int i = n - 1; i >= 1; --i) {
+        res[i] = max(res[i], res[i + 1]);
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << res[i] << ' ';
     }
 }
 
-main() {
+int32_t main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    if (fopen("KSACK1.inp", "r")) {
-        freopen("KSACK1.inp", "r", stdin);
-        freopen("KSACK1.out", "w", stdout);
-    }
-    cin >> n >> m;
-    
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i].first >> a[i].second;
+    if (fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
     }
 
-    pre[n] = a[n].second;
-    for (int i = n-1; i >= 1; i--) {
-        pre[i] = pre[i+1] + a[i].second;
-    }
-    
-    backtrack(1, 0, 0);
-    
-    cout << maxx << '\n';
-    for (int i = 0; i < ans.size(); i++) {
-        if (ans[i] == 1) {
-            cout << i + 1 << " ";
-        }
-    }
+    logic();
+
+    return 0;
 }
