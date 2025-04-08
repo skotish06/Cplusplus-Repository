@@ -1,73 +1,30 @@
-#include <bits/stdc++.h>
-#define int long long
-#define MOD 1000000007
-#define INF 1e18
-#define MAXN 100005
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
-#define all(a) (a).begin(), (a).end()
-#define pb push_back
-#define fi first
-#define se second
-#define pii pair<int, int>
-#define task ""
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 using namespace std;
-const int N = 1e6 + 9;
-int a[N], res[N];
-int n;
-int l[N], r[N];
-stack<int> le, ri;
 
-void solve() {
+int main() {
+    // Đọc dữ liệu từ file
+
+    int n;
     cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
-        res[i] = 0;
-    }
-    for (int i = 1; i <= n; ++i) {
-        while (!le.empty() && a[le.top()] >= a[i]) {
-            le.pop();
-        }
-        while (!ri.empty() && a[ri.top()] >= a[n - i + 1]) {
-            ri.pop();
-        }
-        if (!le.empty()) {
-            l[i] = le.top();
-        } else {
-            l[i] = 0;
-        }
-        if (!ri.empty()) {
-            r[n - i + 1] = ri.top();
-        } else {
-            r[n - i + 1] = n + 1;
-        }
-        le.push(i);
-        ri.push(n - i + 1);
-    }
-    for (int i = 1; i <= n; ++i) {
-        int len = r[i] - l[i] - 1;
-        res[len] = max(res[len], a[i]);
-    }
-    for (int i = n - 1; i >= 1; --i) {
-        res[i] = max(res[i], res[i + 1]);
-    }
-    for (int i = 1; i <= n; ++i) {
-        cout << res[i] << ' ';
-    }
-}
 
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    // Tạo mảng dp: dp[i] là số cách phân tích số i
+    vector<long long> dp(n + 1, 0);
+    dp[0] = 1;
 
-    if (fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+    // Quy hoạch động
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i; j <= n; ++j) {
+            dp[j] += dp[j - i];
+        }
     }
 
-    logic();
+    // Ghi kết quả ra file
+    cout << dp[n] << endl;
+
+    // Đóng file
 
     return 0;
 }
