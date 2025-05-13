@@ -1,68 +1,60 @@
 #include <bits/stdc++.h>
 #define int long long
-#define MOD 1000000007
-#define INF 1e18
-#define MAXN 100005
-#define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define REP(i, n) FOR(i, 1, n)
-#define all(a) (a).begin(), (a).end()
-#define pb push_back
+#define all(v) v.begin(), v.end()
+#define ms(d,x) memset(d, x, sizeof(d))
+#define ii pair<int,int>
+#define iii pair<int,ii>
 #define fi first
 #define se second
-#define pii pair<int, int>
+#define execute cerr << "Time elapsed: " << (1.0 * clock() / CLOCKS_PER_SEC) << "s" << '\n';
+#define shouko 1
+#define orz shouko
+// dont copy my flow dude
 #define task ""
 
-using namespace std;
-const int N = 25;
-int n, m, w;
-int a[N][N], Max = -1, mx[N];
-bool stop;
 
-void ql(int i, int last, int sum) {
-    if (stop) return;
-    if (sum + mx[i] < Max || sum > w) return;
-    if (i > n) {
-        Max = max(Max, sum);
-        if (Max == w) {
-            stop = 1;
-        }
-        return;
-    }
-    for (int j = m; j >= 1; j--) {
-        if (a[i][j] < last) break;
-        if (sum + a[i][j] * (n - i + 1) > w) continue;
-        ql(i + 1, a[i][j], sum + a[i][j]);
-    }
-}
+using namespace std;
+const int N = 1e6 + 9;
+const int M = 1e5 + 5;
+const int inf = 1e18;
+const int mod = 1e9 + 7;
+
 
 void logic() {
-    cin >> m >> n >> w;
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            cin >> a[j][i];
-        }
-    }
-    for (int i = 1; i <= n; i++) {
-        sort(a[i] + 1, a[i] + 1 + m);
-    }
-    for (int i = n; i >= 1; i--) {
-        mx[i] = mx[i + 1] + a[i][m];
-    }
-    ql(1, 0, 0);
-    cout << Max;
+    int a, b; cin >> a >> b;
+    cout << (a & b);
+    // execute;
 }
 
 int32_t main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-	if (fopen(task ".inp", "r")) {
-		freopen(task ".inp", "r", stdin);
-		freopen(task ".out", "w", stdout);
-	}
+    if (fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
+    }
 
-	logic();
+    logic();
 
-	return 0;
+    return 0;
 }
+
+/*
+--/shouko\--
+DRAFT:
+110
+101
+100
+
+1000
+1100
+1000
+
+01111
+10011
+0xp0011
+
+------------
+*/

@@ -1,0 +1,1 @@
+{"name":"Local: LIQ","url":"/Users/shouko/Documents/workspace/learningpath/oj/chtoj/dutuyen/dp/LIQ.cpp","tests":[{"id":1744704656137,"input":"12\n1 2 3 8 9 4 5 6 2 3 9 10","output":"8\n1 2 3 6 7 8 11 12"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shouko/Documents/workspace/learningpath/oj/chtoj/dutuyen/dp/LIQ.cpp","group":"local","local":true}
